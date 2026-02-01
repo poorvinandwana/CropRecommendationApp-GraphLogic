@@ -84,14 +84,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
     
-    # 'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'my_db',  # Replace with your AWS RDS database name
-        # 'USER': 'poorvinandwana',  # Replace with your AWS RDS username
-        # 'PASSWORD': 'poorvinandwana',  # Replace with your AWS RDS password
-        # 'HOST': 'db2.cnqiuw24q5sn.ap-south-1.rds.amazonaws.com',  # Your AWS RDS endpoint
-        # 'PORT': '5432',  # Default PostgreSQL port
-    # }
 }
 
 
