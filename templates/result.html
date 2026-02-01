@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropMatch | Recommendation</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            width: 100%;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e8f5e9;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: #c8e6c9;
+            font-weight: 300;
+        }
+
+        /* ---------- MAIN ---------- */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+        }
+
+        .result-container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            padding: 35px 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .crop-rank {
+            margin-bottom: 22px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: rgba(67, 160, 71, 0.08);
+            border-left: 5px solid #43a047;
+        }
+
+        .crop-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 6px;
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .secondary {
+            background: rgba(56, 142, 60, 0.06);
+            border-left-color: #388e3c;
+        }
+
+        .back-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            padding: 12px 45px;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(67, 160, 71, 0.4);
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            text-align: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 0.75rem;
+            color: #c8e6c9;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+            }
+
+            .result-container {
+                padding: 28px 24px;
+            }
+        }
+
+        .soil-summary {
+            margin-bottom: 28px;
+            padding: 22px 24px;
+            border-radius: 18px;
+            background: rgba(46, 125, 50, 0.08);
+            border: 1px solid rgba(46, 125, 50, 0.25);
+        }
+
+        .soil-summary-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2e7d32;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .soil-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px 18px;
+        }
+
+        .soil-item {
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .soil-item span {
+            display: block;
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .soil-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="brand">CropMatch 🌱</div>
+        <div class="tagline">Smart soil insights for sustainable farming</div>
+    </nav>
+
+    <div class="soil-summary">
+    <div class="soil-summary-title">Soil Summary</div>
+
+    <div class="soil-grid">
+        <div class="soil-item">
+            Nitrogen
+            <span>{{ soil.N }} mg/kg</span>
+        </div>
+
+        <div class="soil-item">
+            Phosphorus
+            <span>{{ soil.P }} mg/kg</span>
+        </div>
+
+        <div class="soil-item">
+            Potassium
+            <span>{{ soil.K }} mg/kg</span>
+        </div>
+
+        <div class="soil-item">
+            Temperature
+            <span>{{ soil.T }} °C</span>
+        </div>
+
+        <div class="soil-item">
+            Soil pH
+            <span>{{ soil.pH }}</span>
+        </div>
+
+        <div class="soil-item">
+            Moisture
+            <span>{{ soil.M }} %</span>
+        </div>
+
+        <div class="soil-item">
+            Salinity
+            <span>{{ soil.salinity }} dSm</span>
+        </div>
+
+        <div class="soil-item">
+            Soil Type
+            <span>{{ soil.soil_type }}</span>
+        </div>
+    </div>
+</div>
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="result-container">
+            
+
+            <h2>Best Crop Recommendations</h2>
+
+            {% if result %}
+                <div class="crop-rank">
+                    <div class="crop-title">🌾 Recommended Crop</div>
+                    <div class="explanation">
+                        <strong>{{ result.crop }}</strong><br>
+                        {{ result.explanation }}
+                    </div>
+                </div>
+
+                {% if result.alternatives %}
+                    {% for crop in result.alternatives %}
+                        <div class="crop-rank secondary">
+                            <div class="crop-title">Alternative Option</div>
+                            <div class="explanation">{{ crop }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% else %}
+                <p style="text-align:center;">No suitable crops found for the given soil conditions.</p>
+            {% endif %}
+
+            <div class="back-wrapper">
+                <a href="/" class="back-btn">Try Different Soil Values</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 CropMatch • Cultivating data-driven agriculture 🌾
+    </footer>
+
+</body>
+</html>
+
+

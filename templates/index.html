@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropMatch</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            width: 100%;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e8f5e9;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: #c8e6c9;
+            font-weight: 300;
+        }
+
+        /* ---------- MAIN ---------- */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            padding: 35px 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #388e3c;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px 22px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: 1px solid #cfd8dc;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #43a047;
+            box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.2);
+        }
+
+        .submit-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 35px;
+        }
+
+        button {
+            padding: 14px 55px;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(67, 160, 71, 0.4);
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            text-align: center;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 0.75rem;
+            color: #c8e6c9;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+            }
+
+            .form-container {
+                padding: 28px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="brand">CropMatch 🌱</div>
+        <div class="tagline">Smart soil insights for sustainable farming</div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="form-container">
+            <h2>Soil Intelligence Input</h2>
+
+            <form action="/" method="post">
+                {% csrf_token %}
+
+                <div class="section">
+                    <div class="section-title">Soil Nutrients</div>
+                    <div class="grid-3">
+                        <div class="field">
+                            <label>Nitrogen (mg/kg)</label>
+                            <input type="number" name="nitrogen" step="0.01" required>
+                        </div>
+                        <div class="field">
+                            <label>Phosphorus (mg/kg)</label>
+                            <input type="number" name="phosphorus" step="0.01" required>
+                        </div>
+                        <div class="field">
+                            <label>Potassium (mg/kg)</label>
+                            <input type="number" name="potassium" step="0.01" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Environmental Conditions</div>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Temperature (°C)</label>
+                            <input type="number" name="temperature" step="0.1" required>
+                        </div>
+                        <div class="field">
+                            <label>Soil pH</label>
+                            <input type="number" name="ph" step="0.1" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Soil Properties</div>
+                    <div class="grid-3">
+                        <div class="field">
+                            <label>Soil Type</label>
+                            <select name="soil_type" required>
+                                <option value="clay">Clay</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="loamy">Loamy</option>
+                                <option value="peaty">Peaty</option>
+                                <option value="saline">Saline</option>
+                                <option value="silty">Silty</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Moisture Content</label>
+                            <select name="moisture" required>
+                                <option value="high">High</option>
+                                <option value="moderate-high">Moderate-High</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="moderate-low">Moderate-Low</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Salinity</label>
+                            <select name="salinity" required>
+                                <option value="high">High</option>
+                                <option value="moderate-high">Moderate-High</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="moderate-low">Moderate-Low</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-wrapper">
+                    <button type="submit">Give Recommendations</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 CropMatch • Cultivating data-driven agriculture 🌾
+    </footer>
+
+</body>
+</html>
